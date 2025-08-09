@@ -4,6 +4,8 @@ import AddUser from "./addUser"
 import AddAdmin from "./addAdmin"
 import AddStore from "./addStore"
 import Home from "./home"
+import ViewUsers from "./ViewUsers"
+import ViewStores from "./viewStore"
 // Has access to a dashboard displaying:
 // ○ Total number of users
 // ○ Total number of stores
@@ -19,6 +21,8 @@ export default function AdminDashboard(){
                 <Route path="add-store" element={<AddStore/>}/>
                 <Route path="add-admin" element={<AddAdmin/>}/>
                 <Route path="/" element={<Home/>}/>
+                <Route path='view-users' element={<ViewUsers/>}/>
+                <Route path='view-stores' element={<ViewStores/>}/>
             </Routes>
         </>
     )

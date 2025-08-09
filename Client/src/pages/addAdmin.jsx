@@ -1,13 +1,13 @@
 import { useState } from "react";
+import axios from "axios";
 
 export default function AddAdmin() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    password: "",
-    role: "user"
-  });
+    admin_name: "",
+    admin_email: "",
+    admin_address: "",
+    admin_password: ""
+  }); 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,8 +15,14 @@ export default function AddAdmin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Add backend POST request
-    console.log("Submitted:", formData);
+    try {
+      const res = await axios.post("http://localhost:5000/api/admin", formData);
+      console.log("Admin Added:", res.data);
+      alert("Admin added successfully!");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to add Admin");
+    }
   };
 
   return (
@@ -25,42 +31,42 @@ export default function AddAdmin() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
-          name="name"
+          name="admin_name"
           placeholder=" Admin's Name"
-          minLength={20}
+          minLength={10}
           maxLength={60}
           required
           className="w-full p-2 border rounded"
-          value={formData.name}
+          value={formData.admin_name}
           onChange={handleChange}
         />
         <input
           type="email"
-          name="email"
+          name="admin_email"
           placeholder="Admin's Email"
           required
           className="w-full p-2 border rounded"
-          value={formData.email}
+          value={formData.admin_email}
           onChange={handleChange}
         />
         <textarea
-          name="address"
+          name="admin_address"
           placeholder="Address"
           maxLength={400}
           required
           className="w-full p-2 border rounded"
-          value={formData.address}
+          value={formData.admin_address}
           onChange={handleChange}
         />
         <input
           type="password"
-          name="password"
+          name="admin_password"
           placeholder="Password"
           minLength={8}
           maxLength={16}
           required
           className="w-full p-2 border rounded"
-          value={formData.password}
+          value={formData.admin_password}
           onChange={handleChange}
         />
         <button

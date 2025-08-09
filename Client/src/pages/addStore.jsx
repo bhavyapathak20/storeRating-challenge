@@ -1,12 +1,12 @@
 import { useState } from "react";
+import axios from "axios";
 
 export default function AddStore() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    password: "",
-    role: "user"
+    store_name: "",
+    store_owner: "",
+    store_email: "",
+    store_address: ""
   });
 
   const handleChange = (e) => {
@@ -15,9 +15,15 @@ export default function AddStore() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Add backend POST request
-    console.log("Submitted:", formData);
-  };
+    try {
+      const res = await axios.post("http://localhost:5000/api/store", formData);
+      console.log("Store Added:", res.data);
+      alert("Store added successfully!");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to add store");
+    }
+  }; 
 
   return (
     <div className="max-w-md mx-auto mt-8 bg-white p-6 shadow rounded">
@@ -25,9 +31,9 @@ export default function AddStore() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
-          name="name"
+          name="store_name"
           placeholder="Store Name"
-          minLength={20}
+          minLength={10}
           maxLength={60}
           required
           className="w-full p-2 border rounded"
@@ -36,9 +42,9 @@ export default function AddStore() {
         />
         <input
           type="text"
-          name="name"
+          name="store_owner"
           placeholder="Store Owner"
-          minLength={20}
+          minLength={10}
           maxLength={60}
           required
           className="w-full p-2 border rounded"
@@ -47,7 +53,7 @@ export default function AddStore() {
         />
         <input
           type="email"
-          name="email"
+          name="store_email"
           placeholder="Store Email"
           required
           className="w-full p-2 border rounded"
@@ -55,7 +61,7 @@ export default function AddStore() {
           onChange={handleChange}
         />
         <textarea
-          name="address"
+          name="store_address"
           placeholder="Store Address"
           maxLength={400}
           required
