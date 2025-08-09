@@ -3,7 +3,8 @@ import { createStore, getStores } from "../controllers/storeController.js";
 
 const router = express.Router();
 
-router.post("/", createStore);
+// Matches GET /api/stores → used in frontend
 router.get("/", getStores);
+router.post("/", createStore);
 
 export default router;
